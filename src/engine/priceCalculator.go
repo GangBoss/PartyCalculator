@@ -1,10 +1,10 @@
 package engine
 
-type CalculationResult struct{
+type Transaction struct{
 	from,to,amount int
 }
 
-func Calculate(arrayDelta []int) []CalculationResult {
+func Calculate(arrayDelta []int) []Transaction {
 
-	return []CalculationResult{}
+	return []Transaction{}
 }
