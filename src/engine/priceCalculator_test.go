@@ -7,22 +7,38 @@ import (
 
 func TestToPenetrate(t *testing.T) {
 
-	slice1 := []int{50, -20, -30, -41, -9, 15, 5, 22, 8, 0, -25, 25, -12, 9, 3, -4, -3, 1, 5, 1}
-	result:=Calculate(slice1)
-	rightTransactions := []Transaction{
-		{17, 20, 3},
-		{20,19,2},
-		{16,19,2},
-		{10,18,1},
-		{13,12,15},
-		{11,25,12},
-		{3,9,30},
-		{9,8,22},
-		{2,7,20},
-		{7,6,15},
-		{5,1,9},
-		{4,41,1},
+	arrayDelta := []int{50, -20, -30, -41, -9, 15, 5, 22, 8, 0, -25, 25, -12, 9, 3, -4, -3, 1, 5, 1}
+	transactionResult := Calculate(arrayDelta)
+
+	assertTransaction(t, arrayDelta,transactionResult,13)
+}
+
+func TestSimpleTest(t *testing.T) {
+
+	arrayDelta := []int{12, -9, -3}
+	transactionResult := Calculate(arrayDelta)
+
+	assertTransaction(t, arrayDelta, transactionResult, 2)
+}
+
+func assertTransaction(t *testing.T,slice1 []int,result []Transaction, bestCount int) {
+	arraySum := positiveArraySum(slice1)
+
+	transactionSum := 0
+	for _, transaction := range result {
+		transactionSum += transaction.amount
 	}
 
-	assert.ObjectsAreEqualValues(result, rightTransactions)
+	assert.Len(t, result, bestCount, "result %v", result)
+	assert.Equal(t, arraySum, transactionSum, "result %v", result)
+}
+
+func positiveArraySum(arr []int) int {
+	sum := 0
+	for _, value := range arr {
+		if value > 0 {
+			sum += value
+		}
+	}
+	return sum
 }
