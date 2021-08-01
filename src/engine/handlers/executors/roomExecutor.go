@@ -1,4 +1,4 @@
-package engine
+package executors
 
 import (
 	"github.com/GangBoss/PartyCalculator/src/types"
@@ -6,16 +6,16 @@ import (
 	"reflect"
 )
 
-type AuthorizeHandler struct {
+type RoomCommandExecutor struct {
 	logger logrus.FieldLogger
 }
 
-func (m *AuthorizeHandler) HandleRequest(result types.HandleResult) types.HandleResult {
+func (m *RoomCommandExecutor) HandleRequest(result types.HandleResult) types.HandleResult {
 	return result
 }
 
-func NewAuthorizeHandler(logger *logrus.Logger) *AuthorizeHandler {
-	var authorizeHandler = new(AuthorizeHandler)
+func NewCommandExecutor(logger *logrus.Logger) *RoomCommandExecutor {
+	var authorizeHandler = new(RoomCommandExecutor)
 	authorizeHandler.logger = logger.WithField("class", reflect.TypeOf(*authorizeHandler).String())
 	authorizeHandler.logger.Infof("created")
 	return authorizeHandler

@@ -7,3 +7,6 @@ import (
 type Handler interface {
 	HandleRequest(types.HandleResult) types.HandleResult
 }
+type HandlerCollection interface {
+	AddHandler(handler Handler)
+}

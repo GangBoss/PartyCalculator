@@ -24,6 +24,6 @@ func (result *HandleResult) HandelError(err error) *HandleResult {
 	return result
 }
 
-func NewHandleResult() *HandleResult {
-	return &HandleResult{Requisites: make(map[string]string), Continuable: true}
+func NewHandleResult(request *Request) *HandleResult {
+	return &HandleResult{Requisites: make(map[string]string), Request: request, Continuable: true}
 }

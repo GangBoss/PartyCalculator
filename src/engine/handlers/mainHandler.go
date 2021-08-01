@@ -1,4 +1,4 @@
-package engine
+package handlers
 
 import (
 	"github.com/GangBoss/PartyCalculator/src/patterns"
@@ -7,6 +7,7 @@ import (
 	"reflect"
 )
 
+//MainHandler starts handle pipeline
 type MainHandler struct {
 	handlers []patterns.Handler
 	logger   logrus.FieldLogger
@@ -27,13 +28,15 @@ func (m *MainHandler) HandleRequest(result types.HandleResult, observer chan<- *
 	observer <- &result
 }
 
+// AddHandler  Used to handlers to pipeline, they run in the same order on handle
 func (m *MainHandler) AddHandler(handler patterns.Handler) {
 	m.logger.Infof("handler %s added to pipeline",reflect.TypeOf(handler).String())
 
 	m.handlers = append(m.handlers, handler)
 }
 
-func (m *MainHandler) WaitForRequest(initialRequest <-chan *types.HandleResult, observer chan<- *types.HandleResult) {
+// WaitForRequest Used to send request to pipeline
+func (m *MainHandler) WaitForRequest(initialRequest <-chan *types.Request, observer chan<- *types.HandleResult) {
 	defer func() {}()
 	{
 		err := recover()
@@ -42,7 +45,8 @@ func (m *MainHandler) WaitForRequest(initialRequest <-chan *types.HandleResult, 
 		}
 	}
 	for val := range initialRequest {
-		go m.HandleRequest(*val, observer)
+		handleResult:=types.NewHandleResult(val)
+		go m.HandleRequest(*handleResult, observer)
 	}
 }
 
