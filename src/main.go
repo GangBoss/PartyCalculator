@@ -2,18 +2,15 @@ package main
 
 import (
 	"github.com/GangBoss/PartyCalculator/src/engine"
-	"log"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
 
 var container= engine.ConfigureDi()
-	var logLink *log.Logger
+	var logLink *logrus.Logger
 	container.Make(&logLink)
-	var logInst *log.Logger
-	container.Make(&logInst)
-	logLink.Print("log")
-	logInst.Print("log2")
+	logLink.Printf("started")
 
 
 }
